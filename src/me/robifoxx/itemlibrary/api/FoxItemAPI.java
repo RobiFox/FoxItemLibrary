@@ -1,8 +1,7 @@
 package me.robifoxx.itemlibrary.api;
 
-import de.tr7zw.itemnbtapi.NBTCompound;
-import de.tr7zw.itemnbtapi.NBTItem;
 import me.robifoxx.itemlibrary.exceptions.ItemGroupAlreadyExists;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -11,7 +10,8 @@ import java.util.List;
 
 public class FoxItemAPI {
     private static FoxItemAPI instance;
-    
+    private ItemNBTManager im = ItemNBTManager.getInstance();
+
     public static FoxItemAPI getInstance() {
         return instance == null ? (instance = new FoxItemAPI()) : instance;
     }
@@ -32,23 +32,29 @@ public class FoxItemAPI {
     }
 
     public FoxItem findItem(String id) {
+        if(id == null || !id.contains(":")) return null;
+
         String[] split = id.split(":");
         String plugin = split[0];
         String itemId = split[1];
 
+        if(itemGroups.get(plugin) == null
+                || itemGroups.get(plugin).items.get(itemId) == null) {
+            return null;
+        }
         return itemGroups.get(plugin).items.get(itemId);
     }
 
     public FoxItem findItem(ItemStack i) {
-        NBTItem nbtItem = new NBTItem(i);
-        NBTCompound foxItemData = nbtItem.getCompound("FoxItemData");
-        return findItem(foxItemData.getString("FoxItemID"));
+        String id = im.get("FoxItemData", "FoxItemID", i);
+        if(id == null) {
+            return null;
+        }
+        return findItem(id);
     }
 
     public boolean isFoxItem(ItemStack i) {
-        NBTItem nbtItem = new NBTItem(i);
-        NBTCompound foxItemData = nbtItem.getCompound("FoxItemData");
-        return foxItemData.getString("FoxItemID") != null;
+        return im.get("FoxItemData", "FoxItemID", i) != null;
     }
 
     public List<ItemGroup> getItemGroupList() {
