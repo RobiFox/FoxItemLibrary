@@ -19,14 +19,14 @@ public class FoxItemUpdates implements Listener {
                         /*&& foxItem.getNBTCompound(new NBTItem(item)).getLong("FoxItemRefreshTimer") >= System.currentTimeMillis()*/) {
                     //ItemStack cloned = item.clone();
                     item.setType(foxItem.getItem().getType());
-                    ItemStack newItem = foxItem.updateItem(item);
+                    ItemStack newItem = foxItem.updateItem(e.getPlayer(), item);
                     e.getPlayer().getInventory().setItem(i, newItem);
                 }
             }
         }
     }
 
-    @EventHandler
+   /*@EventHandler
     public void join(EnchantItemEvent e) {
         ItemStack item;
         FoxItem foxItem;
@@ -36,5 +36,5 @@ public class FoxItemUpdates implements Listener {
                 e.setCancelled(true);
             }
         }
-    }
+    }*/
 }

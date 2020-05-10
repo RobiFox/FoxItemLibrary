@@ -46,18 +46,26 @@ public class FoxItemAPI {
     }
 
     public FoxItem findItem(ItemStack i) {
-        String id = im.get("FoxItemData", "FoxItemID", i);
+        String id = im.getString("FoxItemData", "FoxItemID", i);
         if(id == null) {
             return null;
         }
         return findItem(id);
     }
 
+    public boolean isSimilar(FoxItem f1, FoxItem f2) {
+        return (f1.getGroup() + ":" + f1.getUniqueId()).equalsIgnoreCase(f2.getGroup() + ":" + f2.getUniqueId());
+    }
+
     public boolean isFoxItem(ItemStack i) {
-        return im.get("FoxItemData", "FoxItemID", i) != null;
+        return im.getString("FoxItemData", "FoxItemID", i) != null;
     }
 
     public List<ItemGroup> getItemGroupList() {
         return new ArrayList<>(itemGroups.values());
+    }
+
+    public ItemGroup findGroupById(String id) {
+        return itemGroups.get(id);
     }
 }

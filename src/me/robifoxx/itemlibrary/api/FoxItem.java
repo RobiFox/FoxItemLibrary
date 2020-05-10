@@ -2,9 +2,9 @@ package me.robifoxx.itemlibrary.api;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import de.tr7zw.itemnbtapi.NBTCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -21,21 +21,43 @@ public abstract class FoxItem {
     public abstract String getUniqueId();
     public abstract ItemStack getItem();
 
-    public abstract ItemMeta setItemMeta(ItemStack i);
+    public void finishedRegistering() {
+
+    }
+
+    public abstract ItemMeta setItemMeta(Player p, ItemStack i);
     //public abstract void storeData(NBTCompound item);
 
-    public final ItemStack createItem() {
+    public ItemStack createItem(Player p, HashMap<String, Object> nn) {
         ItemStack i = getItem().clone();
+        /*System.out.println("Item null? " + (i == null) + " - ");
+        System.out.println("Item null? " + (getItem() == null) + " - ");
+        System.out.println("im null? " + (im == null) + " - " + im);
+        System.out.println("group? " + (group.getPrefix() == null) + " - " + group.getPrefix());
+        System.out.println("group? " + (getUniqueId() == null) + " - " + getUniqueId());
+        System.out.println("Ye" + lll++);*/
         for(String s : nbt.keySet()) {
             i = im.set("FoxItemCustomData", s, nbt.get(s), i);
         }
+        if(nn != null) {
+            for (String s : nn.keySet()) {
+                i = im.set("FoxItemCustomData", s, nn.get(s), i);
+            }
+        }
         i = im.set("FoxItemData", "FoxItemID", group.getPrefix() + ":" + getUniqueId(), i);
-        return updateItem(i);
+        return updateItem(p, i);
     }
 
-    public ItemStack updateItem(ItemStack i) {
-        ItemMeta m = setItemMeta(i);
-        m.setUnbreakable(i.getItemMeta().isUnbreakable());
+    public ItemStack createItem(Player p) {
+        return createItem(p, null);
+    }
+
+    public ItemStack createItem() {
+        return createItem(null, null);
+    }
+
+    public ItemStack updateItem(Player p, ItemStack i) {
+        ItemMeta m = setItemMeta(p, i);
         i.setItemMeta(m);
         return i;
     }
@@ -49,33 +71,43 @@ public abstract class FoxItem {
     }*/
 
     public final boolean isSimilar(ItemStack i) {
-        String r = im.get("FoxItemData", "FoxItemID", i);
+        String r = im.getString("FoxItemData", "FoxItemID", i);
         return r != null && r.equalsIgnoreCase(group.getPrefix() + ":" + getUniqueId());
     }
 
-    public ItemStack updateNbt(String path, Object value, ItemStack i) {
-        HashMap<String, Object> h = new HashMap<>();
-        h.put(path, value);
-        return updateNbt(h, i);
+    /*public ItemStack updateNbt(String path, Object value, ItemStack i) {
+        return updateNbt(null, path, value, i);
     }
 
     public ItemStack updateNbt(HashMap<String, Object> hash, ItemStack i) {
+        return updateNbt((Player) null, hash, i);
+    }*/
+
+    public ItemStack updateNbt(Player p, String path, Object value, ItemStack i) {
+        HashMap<String, Object> h = new HashMap<>();
+        h.put(path, value);
+        return updateNbt(p, h, i);
+    }
+
+    public ItemStack updateNbt(Player p, HashMap<String, Object> hash, ItemStack i) {
         ItemStack item = i.clone();
         for(String s : hash.keySet()) {
             item = im.set("FoxItemCustomData", s, hash.get(s), item);
         }
-        return updateItem(item);
+        return updateItem(p, item);
     }
 
     public Object getNbt(String path, ItemStack i) {
-        if(im.get("FoxItemCustomData", path, i) == null) {
+        if(im.getString("FoxItemCustomData", path, i) == null) {
             return nbt.get(path);
         } else {
-            if(nbt.get(path) instanceof Integer) {
-                return im.getInt("FoxItemCustomData", path, i);
+            return im.get("FoxItemCustomData", path, im.getObjectForReflection(nbt.get(path)), i);
+            /*if(nbt.get(path) instanceof Integer) {
+                im.()
+                //return im.getInt("FoxItemCustomData", path, i);
             } else {
-                return im.get("FoxItemCustomData", path, i);
-            }
+                //return im.getString("FoxItemCustomData", path, i);
+            }*/
         }
     }
 

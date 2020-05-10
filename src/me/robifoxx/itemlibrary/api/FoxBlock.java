@@ -6,6 +6,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public abstract class FoxBlock extends FoxItem {
+
     // TODO
     public abstract void onPlace(BlockPlaceEvent e);
     public abstract void onBreak(BlockBreakEvent e);

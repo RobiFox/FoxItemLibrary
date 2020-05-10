@@ -19,9 +19,14 @@ public abstract class ItemGroup {
         } else {
             throw new ItemGroupAlreadyExists("Item " + item.getUniqueId() + " already registered");
         }
+        item.finishedRegistering();
     }
 
     public final List<FoxItem> getItems() {
         return new ArrayList<>(items.values());
+    }
+
+    public final FoxItem getItem(String id) {
+        return items.get(id);
     }
 }
