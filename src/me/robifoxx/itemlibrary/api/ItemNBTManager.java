@@ -131,6 +131,8 @@ public class ItemNBTManager {
     public String getObjectForReflection(Object obj) {
         if(obj instanceof String) {
             return "String";
+        } else if(obj instanceof String[]) {
+            return "StringArray";
         } else if(obj instanceof Integer) {
             return "Int";
         } else if(obj instanceof Boolean) {

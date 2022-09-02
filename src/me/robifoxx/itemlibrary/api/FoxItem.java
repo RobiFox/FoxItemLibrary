@@ -12,6 +12,7 @@ import org.bukkit.material.MaterialData;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class FoxItem {
@@ -44,7 +45,12 @@ public abstract class FoxItem {
                 i = im.set("FoxItemCustomData", s, nn.get(s), i);
             }
         }
-        i = im.set("FoxItemData", "FoxItemID", group.getPrefix() + ":" + getUniqueId(), i);
+        i = im.set("FoxItemData",
+                "FoxItemID",
+                group.getPrefix()
+                        + ":"
+                        + getUniqueId(),
+                i);
         return updateItem(p, i);
     }
 
@@ -142,5 +148,16 @@ public abstract class FoxItem {
 
     public String getGroup() {
         return group.getPrefix();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FoxItem)) return false;
+        FoxItem foxItem = (FoxItem) o;
+        return Objects.equals(nbt, foxItem.nbt) && group.equals(foxItem.group);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(group.getPrefix(), getUniqueId());
     }
 }

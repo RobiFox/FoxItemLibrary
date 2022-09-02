@@ -12,10 +12,11 @@ public abstract class ItemGroup {
     HashMap<String, FoxItem> items = new HashMap<>();
 
     public final void registerItem(FoxItem item) {
-        item.group = this;
+        //item.group = this;
         String id = item.getUniqueId();
         if(items.get(id) == null) {
             items.put(id, item);
+            items.get(id).group = this;
         } else {
             throw new ItemGroupAlreadyExists("Item " + item.getUniqueId() + " already registered");
         }

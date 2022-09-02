@@ -50,7 +50,7 @@ public class FoxItemListeners implements Listener {
         }
     }
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void interact(BlockBreakEvent e) {
         if(e.isCancelled()) {
             return;
@@ -69,7 +69,7 @@ public class FoxItemListeners implements Listener {
 
     private HashMap<String, FoxItem> itemClick = new HashMap<>();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void throwProj(ProjectileLaunchEvent e) {
         FoxItem item;
         if(e.getEntity().getShooter() != null
@@ -80,7 +80,7 @@ public class FoxItemListeners implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void throwProj(ProjectileHitEvent e) {
         FoxItem item;
         if(e.getEntity().getShooter() != null
@@ -92,7 +92,7 @@ public class FoxItemListeners implements Listener {
     }
 
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void interact(PlayerInteractEntityEvent e) {
         if(e.isCancelled()) {
             return;
@@ -109,7 +109,7 @@ public class FoxItemListeners implements Listener {
         }
     }
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void interact(EntityDamageByEntityEvent e) {
         if(e.isCancelled() || !(e.getDamager() instanceof Player)) {
             return;
@@ -126,7 +126,7 @@ public class FoxItemListeners implements Listener {
 
     private static final EquipmentSlot[] SLOTS = new EquipmentSlot[] {EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD, EquipmentSlot.HAND};
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void damagedWith(EntityDamageByEntityEvent e) {
         if(e.isCancelled() || !(e.getEntity() instanceof Player)) {
             return;
@@ -147,7 +147,7 @@ public class FoxItemListeners implements Listener {
         }
     }
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void interact(EntityDeathEvent e) {
         Player p = e.getEntity().getKiller();
         FoxItem item;
@@ -160,7 +160,7 @@ public class FoxItemListeners implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void itemDamage(PlayerItemDamageEvent e) {
         FoxItem item;
         if((item = FoxItemAPI.getInstance().findItem(e.getItem())) != null) {
