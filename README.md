@@ -82,7 +82,7 @@ public class ClickCounter extends FoxItem implements FoxItemInteract {
     public void onInteract(PlayerInteractEvent e) {
         e.getPlayer().sendMessage("Click!");
         FoxItem item = FoxItemAPI.getInstance().findItem(e.getItem()); // convert ItemStack to FoxItem
-        ItemStack i = item.updateNbt(e.getPlayer(), CLICKS, (int) item.getNbt(CLICKS, e.getItem()) + 1, e.getItem()); // add +1 to the click counter. returns an ItemStack with updated values (updated description in this case)
+        ItemStack i = item.updateNbt(e.getPlayer(), CLICKS, (int) item.getNbt(CLICKS, e.getItem()) + 1, e.getItem()); // add +1 to the click counter. returns an ItemStack with updated values (updated description and NBT value in this case)
         e.getPlayer().getInventory().setItemInMainHand(i); // replace the itemstack in the player's inventory
     }
 
