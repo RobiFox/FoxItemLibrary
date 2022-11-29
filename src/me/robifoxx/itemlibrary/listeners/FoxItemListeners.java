@@ -28,13 +28,6 @@ import java.util.stream.Collectors;
 public class FoxItemListeners implements Listener {
     @EventHandler
     public void interact(PlayerInteractEvent e) {
-       /* try {
-            if (e.getPlayer().getName().equalsIgnoreCase("RobiFoxx")) {
-                e.getPlayer().sendMessage(FoxItemAPI.getInstance().findItem(e.getItem()) + "");
-            }
-        } catch(Exception ex) {
-
-        }*/
         FoxItem item;
         if(e.getItem() != null
                 && (item = FoxItemAPI.getInstance().findItem(e.getItem())) != null) {

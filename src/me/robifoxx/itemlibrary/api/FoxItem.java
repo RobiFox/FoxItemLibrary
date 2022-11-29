@@ -31,12 +31,6 @@ public abstract class FoxItem {
 
     public ItemStack createItem(Player p, HashMap<String, Object> nn) {
         ItemStack i = getItem().clone();
-        /*System.out.println("Item null? " + (i == null) + " - ");
-        System.out.println("Item null? " + (getItem() == null) + " - ");
-        System.out.println("im null? " + (im == null) + " - " + im);
-        System.out.println("group? " + (group.getPrefix() == null) + " - " + group.getPrefix());
-        System.out.println("group? " + (getUniqueId() == null) + " - " + getUniqueId());
-        System.out.println("Ye" + lll++);*/
         for(String s : nbt.keySet()) {
             i = im.set("FoxItemCustomData", s, nbt.get(s), i);
         }

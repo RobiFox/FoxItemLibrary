@@ -38,27 +38,6 @@ public class ItemNBTManager {
         return null;
     }
 
-   /*public ItemStack setBad(String base, String path, Object i, ItemStack itemStack) {
-        net.minecraft.server.v1_12_R1.ItemStack item = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(itemStack);
-        if (!item.hasTag()) {
-            item.setTag(new net.minecraft.server.v1_12_R1.NBTTagCompound());
-        }
-        net.minecraft.server.v1_12_R1.NBTTagCompound tag = item.getTag();
-        if (!tag.hasKey(base)) {
-            tag.set(base, new net.minecraft.server.v1_12_R1.NBTTagCompound());
-        }
-        net.minecraft.server.v1_12_R1.NBTTagCompound info = tag.getCompound(base);
-        if(i instanceof String) {
-            info.setString(path, (String) i);
-        } else if(i instanceof Integer) {
-            info.setInt(path, (int) i);
-        } else {
-            throw new RuntimeException("Unknown type (" + i.getClass() + ")! - " + i);
-        }
-        item.setTag(tag);
-        return org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asCraftMirror(item);
-    }*/
-
     public Object get(String base, String path, String what, ItemStack itemStack) {
         try {
             Object item = getBukkitNMSClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class).invoke(null, itemStack);
@@ -89,19 +68,6 @@ public class ItemNBTManager {
     public Integer getInt(String base, String path, ItemStack itemStack) {
         return (Integer) get(base, path, "Int", itemStack);
     }
-
-    /*public String get(String base, String path, ItemStack itemStack) {
-        net.minecraft.server.v1_12_R1.ItemStack item = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(itemStack);
-        if (!item.hasTag()) {
-            item.setTag(new net.minecraft.server.v1_12_R1.NBTTagCompound());
-        }
-        net.minecraft.server.v1_12_R1.NBTTagCompound tag = item.getTag();
-        if (!tag.hasKey(base)) {
-            tag.set(base, new net.minecraft.server.v1_12_R1.NBTTagCompound());
-        }
-        net.minecraft.server.v1_12_R1.NBTTagCompound info = tag.getCompound(base);
-        return info.getString(path);
-    }*/
 
     public Class<?> getNMSClass(String name) {
         // org.bukkit.craftbukkit.v1_8_R3...
