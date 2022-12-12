@@ -1,7 +1,12 @@
 # FoxItemLibrary
 FoxItemLibrary is an API that lets you create custom 100% server-sided items that can be easily updated or modified.
 
-The plugin takes care of all the backend, so all you have to do is make sure they are registered. If item meta data is changed, the updates will be automatically reflected for all players.
+The plugin takes care of all the backend, so all you have to do is make sure they are registered. If item meta data is changed, the updates will be automatically reflected in all players' inventories.
+
+## Server sided?
+Yes, Minecraft doesn't have official mod support, meaning servers can't make players download a client sided mode automatically. This makes this solution inconvenient to do. Either the player has to download and install the mod themselves, or they can't join.
+
+Having it server sided gets rid of this issue.
 
 ## Usage
 Create a class that extends `FoxItem` or a subclass of it.
