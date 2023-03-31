@@ -62,7 +62,7 @@ It is also possible to store custom data on items that are unique to that instan
 ```Java
 public class ClickCounter extends FoxItem implements FoxItemInteract {
     public static final String CLICKS = "Clicks";
-    public ClickCountr() {
+    public ClickCounter() {
         putDefaultNBT(CLICKS, 0); // assign a default value if it's not stored in the item's nbt yet
     }
 
